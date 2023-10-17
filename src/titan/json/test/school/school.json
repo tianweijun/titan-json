@@ -1,0 +1,61 @@
+{
+  "name": "pingxi middle school",
+  "clazzes": [
+    {
+      "name": "chuyi 1 ban",
+      "teachers": [
+        {
+          "name": "xxx",
+          "age": 30
+        }
+      ],
+      "students": [
+        {
+          "name": "twj",
+          "age": 12,
+          "scores": [
+            11,
+            22,
+            33,
+            4,
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "name": "chuyi 2 ban"
+    },
+    {
+      "name": "chuyi 3 ban"
+    },
+    {
+      "name": "chuyi 4 ban"
+    },
+    {
+      "name": "chuer 1 ban"
+    },
+    {
+      "name": "chuer 2 ban"
+    },
+    {
+      "name": "chuer 3 ban"
+    },
+    {
+      "name": "chuer 4 ban"
+    },
+    {
+      "name": "chusan 1 ban"
+    },
+    {
+      "name": "chusan 2 ban"
+    },
+    {
+      "name": "chusan 3 ban"
+    },
+    {
+      "name": "chusan 4 ban"
+    }
+  ]
+}
