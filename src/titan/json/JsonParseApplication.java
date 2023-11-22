@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import titan.ast.runtime.Ast;
 import titan.ast.runtime.RuntimeAutomataAstApplication;
+import titan.json.serialization.PrettySerialization;
+import titan.json.serialization.Serialization;
 import titan.json.visitor.Ast2ContextAstConvertor;
 import titan.json.visitor.JsonVisitor;
 
@@ -56,5 +58,13 @@ public class JsonParseApplication {
 
   public static void destruct() {
     runtimeAstApplication = null; // helper gc
+  }
+
+  public static String toJson(Object src) {
+    return new Serialization(src).toJson();
+  }
+
+  public static String toPrettyJson(Object src) {
+    return new PrettySerialization(src).toJson();
   }
 }

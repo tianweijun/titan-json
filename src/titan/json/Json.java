@@ -26,10 +26,14 @@ public class Json {
   }
 
   public static String toJson(Object src) {
-    return "";
+    return JsonParseApplication.toJson(src);
   }
 
   public static void destruct() {
     JsonParseApplication.destruct();
+  }
+
+  public static String toPrettyJson(Object src) {
+    return JsonParseApplication.toPrettyJson(src);
   }
 }
