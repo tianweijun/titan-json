@@ -35,7 +35,7 @@
 
 # titan-json
 
-a java library  to convert a JSON string to an equivalent Java object  and back.  there are a few type of data member in Json Object:primitives(string,number,true,false,null) ,compound data type(array,obj) contains primitives ant itself.
+a java library  to convert a JSON string to an equivalent Java object  and back.  there are a few type of data member in Json Object:primitives(string,number,true,false,null) ,compound data type(array,obj) contains primitives and itself.
 
 
 

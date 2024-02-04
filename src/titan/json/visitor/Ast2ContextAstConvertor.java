@@ -46,8 +46,8 @@ public class Ast2ContextAstConvertor {
       case NONTERMINAL:
         try {
           String className = getContextAstClassName(ast);
-          Class contextClass = Class.forName(className);
-          Constructor constructor =
+          Class<?> contextClass = Class.forName(className);
+          Constructor<?> constructor =
               contextClass.getDeclaredConstructor(Grammar.class, String.class);
           contextAst = (ContextAst) constructor.newInstance(grammar, ast.alias);
           contextAst.token = ast.token;
