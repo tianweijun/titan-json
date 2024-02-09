@@ -50,7 +50,7 @@ NUMBER
    ;
 
 STRING
-   : '"' (ESC | STRING_OTHER_CHAR)* '"'
+   : '"' ~["]* '"'
    ;
 
  WS
@@ -59,21 +59,6 @@ STRING
 @TerminalGrammar end ;
 
 @TerminalFragmentGrammar begin ;
-ESC
-   : '\\' (["\\/bfnrt] | HEXCHAR)
-   ;
-
-HEXCHAR
-   : [xX] HEX HEX?
-   ;
-
-HEX
-   : [0-9a-fA-F]
-   ;
-
-STRING_OTHER_CHAR
-   : ~["\\]
-   ;
 
 INT
    : '0' | [1-9] [0-9]*
