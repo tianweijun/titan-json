@@ -147,9 +147,11 @@ public class JsonVisitor<T> implements AstVisitor {
         FieldOfObjectContextAstValue fieldOfObjectContextAstValue =
             new FieldOfObjectContextAstValue(obj, fieldName);
         fieldOfObjectContextAstValue.setClassByObjClassReflector(objClassReflector);
-        pair.contextAstValue = fieldOfObjectContextAstValue;
-        // 递归遍历语法树
-        visitPair(pair);
+        if (fieldOfObjectContextAstValue.isJsonField()) {
+          pair.contextAstValue = fieldOfObjectContextAstValue;
+          // 递归遍历语法树
+          visitPair(pair);
+        }
       }
     }
   }

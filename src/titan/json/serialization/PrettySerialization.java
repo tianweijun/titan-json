@@ -2,6 +2,7 @@ package titan.json.serialization;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Stack;
 import titan.json.JsonParseRuntimeException;
 import titan.json.reflector.Primitives;
@@ -84,6 +85,10 @@ public class PrettySerialization {
     Field[] declaredFields = clazz.getDeclaredFields();
     boolean hasRedundantComma = false;
     for (Field field : declaredFields) {
+      int modifiers = field.getModifiers();
+      if (Modifier.isFinal(modifiers) || Modifier.isStatic(modifiers)) {
+        continue;
+      }
       field.setAccessible(true);
       String key = field.getName();
       Object value = null;

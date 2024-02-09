@@ -2,6 +2,7 @@ package titan.json.visitor;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import titan.json.JsonParseRuntimeException;
 import titan.json.reflector.JsonClassReflector;
 
@@ -63,6 +64,11 @@ public abstract class ContextAstValue {
       field = objClassReflector.getField(fieldName);
       Class<?> fieldClass = field.getType();
       classOfValue = new JsonClassReflector(fieldClass);
+    }
+
+    public boolean isJsonField() {
+      int modifiers = field.getModifiers();
+      return !Modifier.isFinal(modifiers) && !Modifier.isStatic(modifiers);
     }
   }
 

@@ -20,7 +20,7 @@ public class JsonApplicationTest {
             .getClassLoader()
             .getResourceAsStream("titan/json/test/school/school.json");
 
-    School school = Json.fromJson(jsonInputStream, School.class);
+    School school = Json.fromJson(jsonInputStream, School.class, "UTF-8");
 
     if (null != jsonInputStream) {
       try {
