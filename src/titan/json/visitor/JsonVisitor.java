@@ -1,7 +1,9 @@
 package titan.json.visitor;
 
+import java.io.UnsupportedEncodingException;
 import titan.ast.runtime.Ast;
 import titan.ast.runtime.Grammar;
+import titan.ast.runtime.StringUtils;
 import titan.json.JsonParseRuntimeException;
 import titan.json.reflector.JsonClassReflector;
 import titan.json.reflector.Primitives;
@@ -24,10 +26,12 @@ public class JsonVisitor<T> implements AstVisitor {
 
   private Ast sourceAst;
   private Class<T> classOfT;
+  private String encoding;
 
-  public JsonVisitor(Ast contextAst, Class<T> classOfT) {
+  public JsonVisitor(Ast contextAst, Class<T> classOfT, String encoding) {
     this.sourceAst = contextAst;
     this.classOfT = classOfT;
+    this.encoding = encoding;
   }
 
   public T parseObject() {
@@ -73,6 +77,7 @@ public class JsonVisitor<T> implements AstVisitor {
       case "STRING":
         String textOfString = productionRuleAst.token.text;
         textOfString = textOfString.substring(1, textOfString.length() - 1); // "xxx"--->xxx
+        textOfString = encodeByString(textOfString);
         productionRuleAst.setValue(textOfString);
         break;
       case "obj": // （引用）【json.value、pair.String ':' value、arr.'[' value ( ',' value)* ']'、】
@@ -85,6 +90,25 @@ public class JsonVisitor<T> implements AstVisitor {
         break;
       default:
     }
+  }
+
+  private String encodeByString(String sourceString) {
+    if (StringUtils.isBlank(encoding)) {
+      return sourceString;
+    }
+    char[] chars = sourceString.toCharArray();
+    byte[] bytes = new byte[chars.length];
+    for (int indexOfChars = 0; indexOfChars < chars.length; indexOfChars++) {
+      char ch = chars[indexOfChars];
+      bytes[indexOfChars] = (byte) (ch & 0xFF);
+    }
+    String encodeString;
+    try {
+      encodeString = new String(bytes, encoding);
+    } catch (UnsupportedEncodingException e) {
+      throw new JsonParseRuntimeException(e);
+    }
+    return encodeString;
   }
 
   @Override

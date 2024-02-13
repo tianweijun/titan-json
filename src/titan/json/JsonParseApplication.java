@@ -24,7 +24,8 @@ public class JsonParseApplication {
    * @param jsonByteInputStream 输入流
    * @return entity
    */
-  public static <T> T fromJson(InputStream jsonByteInputStream, Class<T> classOfT) {
+  public static <T> T fromJson(
+      InputStream jsonByteInputStream, Class<T> classOfT, String encoding) {
     construct();
     Ast ast = runtimeAstApplication.buildAst(jsonByteInputStream);
     if (null != jsonByteInputStream) {
@@ -35,7 +36,7 @@ public class JsonParseApplication {
       }
     }
     Ast contextAst = new Ast2ContextAstConvertor(ast).convert();
-    return new JsonVisitor<T>(contextAst, classOfT).parseObject();
+    return new JsonVisitor<T>(contextAst, classOfT, encoding).parseObject();
   }
 
   private static void construct() {

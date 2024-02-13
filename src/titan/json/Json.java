@@ -3,7 +3,6 @@ package titan.json;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import titan.json.encoding.JsonObjectEncoder;
 
 /**
  * Json api.
@@ -23,13 +22,11 @@ public class Json {
   }
 
   public static <T> T fromJson(InputStream jsonInputStream, Class<T> classOfT) {
-    return JsonParseApplication.fromJson(jsonInputStream, classOfT);
+    return fromJson(jsonInputStream, classOfT, null);
   }
 
-  public static <T> T fromJson(
-      InputStream jsonInputStream, Class<T> classOfT, String stringEncoding) {
-    T ret = JsonParseApplication.fromJson(jsonInputStream, classOfT);
-    return new JsonObjectEncoder(stringEncoding).encode(ret, classOfT);
+  public static <T> T fromJson(InputStream jsonInputStream, Class<T> classOfT, String encoding) {
+    return JsonParseApplication.fromJson(jsonInputStream, classOfT, encoding);
   }
 
   public static String toJson(Object src) {
