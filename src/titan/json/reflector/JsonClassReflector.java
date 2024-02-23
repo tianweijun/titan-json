@@ -2,7 +2,6 @@ package titan.json.reflector;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import titan.ast.runtime.Ast;
 import titan.ast.runtime.Grammar;
 import titan.json.JsonParseRuntimeException;
 import titan.json.visitor.ContextAst;
@@ -62,7 +61,7 @@ public class JsonClassReflector {
     String grammarName = productionRuleAst.grammar.getName();
     if (grammarName.equals("arr")) {
       ArrAst arrAst = (ArrAst) productionRuleAst;
-      for (Ast eleArrAst : arrAst.children) {
+      for (ContextAst eleArrAst : arrAst.children) {
         Grammar eleArrGrammar = eleArrAst.grammar;
         if (eleArrGrammar.getName().equals("value")) {
           ++lengthOfArray;

@@ -19,7 +19,7 @@ public class Ast2ContextAstConvertor {
     this.source = source;
   }
 
-  public Ast convert() {
+  public ContextAst convert() {
     return doConvert(source);
   }
 
@@ -40,16 +40,15 @@ public class Ast2ContextAstConvertor {
       case TERMINAL_FRAGMENT:
         break;
       case TERMINAL:
-        contextAst = new TerminalAst(ast.grammar, ast.alias);
+        contextAst = new TerminalAst(ast.grammar);
         contextAst.token = ast.token;
         break;
       case NONTERMINAL:
         try {
           String className = getContextAstClassName(ast);
           Class<?> contextClass = Class.forName(className);
-          Constructor<?> constructor =
-              contextClass.getDeclaredConstructor(Grammar.class, String.class);
-          contextAst = (ContextAst) constructor.newInstance(grammar, ast.alias);
+          Constructor<?> constructor = contextClass.getDeclaredConstructor(Grammar.class);
+          contextAst = (ContextAst) constructor.newInstance(grammar);
           contextAst.token = ast.token;
         } catch (ClassNotFoundException
             | NoSuchMethodException
@@ -72,13 +71,7 @@ public class Ast2ContextAstConvertor {
    */
   private String getContextAstClassName(Ast ast) {
     String className = ast.grammar.getName();
-    char[] chars = className.toCharArray();
-    char fchar = chars[0];
-    if (97 <= fchar && fchar <= 122) { // 首字母小写转大写
-      fchar ^= 32;
-      chars[0] = fchar;
-      className = new String(chars);
-    }
+    className = className.substring(0, 1).toUpperCase() + className.substring(1);
     className = "titan.json.visitor.ContextAst$" + className + "Ast";
     return className;
   }

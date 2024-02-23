@@ -1,6 +1,7 @@
 package titan.json.visitor;
 
-import titan.ast.runtime.Ast;
+import java.util.LinkedList;
+import titan.ast.runtime.AstToken;
 import titan.ast.runtime.Grammar;
 import titan.json.reflector.JsonClassReflector;
 import titan.json.visitor.ContextAstValue.ArrayContextAstValue;
@@ -11,12 +12,16 @@ import titan.json.visitor.ContextAstValue.RefContextAstValue;
  *
  * @author tian wei jun
  */
-public class ContextAst extends Ast {
+public class ContextAst {
+  public Grammar grammar = null;
+  public AstToken token = null;
+  public LinkedList<ContextAst> children = new LinkedList<ContextAst>();
+
   ContextAst parent = null;
   ContextAstValue contextAstValue = null;
 
-  public ContextAst(Grammar grammar, String alias) {
-    super(grammar, alias);
+  public ContextAst(Grammar grammar) {
+    this.grammar = grammar;
   }
 
   public void passValueByParent() {
@@ -47,15 +52,15 @@ public class ContextAst extends Ast {
 
   public static class TerminalAst extends ContextAst {
 
-    public TerminalAst(Grammar grammar, String alias) {
-      super(grammar, alias);
+    public TerminalAst(Grammar grammar) {
+      super(grammar);
     }
   }
 
   public static class ArrAst extends ContextAst {
 
-    public ArrAst(Grammar grammar, String alias) {
-      super(grammar, alias);
+    public ArrAst(Grammar grammar) {
+      super(grammar);
     }
 
     public void setArrayElementValue(Object v, int indexOfArray) {
@@ -66,28 +71,28 @@ public class ContextAst extends Ast {
 
   public static class JsonAst extends ContextAst {
 
-    public JsonAst(Grammar grammar, String alias) {
-      super(grammar, alias);
+    public JsonAst(Grammar grammar) {
+      super(grammar);
     }
   }
 
   public static class ObjAst extends ContextAst {
 
-    public ObjAst(Grammar grammar, String alias) {
-      super(grammar, alias);
+    public ObjAst(Grammar grammar) {
+      super(grammar);
     }
   }
 
   public static class PairAst extends ContextAst {
 
-    public PairAst(Grammar grammar, String alias) {
-      super(grammar, alias);
+    public PairAst(Grammar grammar) {
+      super(grammar);
     }
   }
 
   public static class ValueAst extends ContextAst {
-    public ValueAst(Grammar grammar, String alias) {
-      super(grammar, alias);
+    public ValueAst(Grammar grammar) {
+      super(grammar);
     }
   }
 }

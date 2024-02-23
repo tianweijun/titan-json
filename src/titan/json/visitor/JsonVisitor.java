@@ -1,7 +1,6 @@
 package titan.json.visitor;
 
 import java.io.UnsupportedEncodingException;
-import titan.ast.runtime.Ast;
 import titan.ast.runtime.Grammar;
 import titan.ast.runtime.StringUtils;
 import titan.json.JsonParseRuntimeException;
@@ -24,11 +23,11 @@ import titan.json.visitor.ContextAstValue.RefContextAstValue;
  */
 public class JsonVisitor<T> implements AstVisitor {
 
-  private Ast sourceAst;
+  private ContextAst sourceAst;
   private Class<T> classOfT;
   private String encoding;
 
-  public JsonVisitor(Ast contextAst, Class<T> classOfT, String encoding) {
+  public JsonVisitor(ContextAst contextAst, Class<T> classOfT, String encoding) {
     this.sourceAst = contextAst;
     this.classOfT = classOfT;
     this.encoding = encoding;
@@ -122,7 +121,7 @@ public class JsonVisitor<T> implements AstVisitor {
     JsonClassReflector eleArrClassReflector = new JsonClassReflector(componentType);
     int indexOfArray = 0;
     ArrayContextAstValue arrayContextAstValue = (ArrayContextAstValue) arrAst.contextAstValue;
-    for (Ast eleArrAst : arrAst.children) {
+    for (ContextAst eleArrAst : arrAst.children) {
       Grammar eleArrGrammar = eleArrAst.grammar;
       if (eleArrGrammar.getName().equals("value")) {
         ValueAst valueEleArrAst = (ValueAst) eleArrAst;
@@ -161,7 +160,7 @@ public class JsonVisitor<T> implements AstVisitor {
   public void visitObj(ObjAst objAst) {
     JsonClassReflector objClassReflector = objAst.contextAstValue.classOfValue;
     Object obj = objAst.contextAstValue.getValue();
-    for (Ast objEleAst : objAst.children) {
+    for (ContextAst objEleAst : objAst.children) {
       Grammar eleGrammar = objEleAst.grammar;
       if (eleGrammar.getName().equals("pair")) {
         PairAst pair = (PairAst) objEleAst;

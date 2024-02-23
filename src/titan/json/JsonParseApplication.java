@@ -7,6 +7,7 @@ import titan.ast.runtime.RuntimeAutomataAstApplication;
 import titan.json.serialization.PrettySerialization;
 import titan.json.serialization.Serialization;
 import titan.json.visitor.Ast2ContextAstConvertor;
+import titan.json.visitor.ContextAst;
 import titan.json.visitor.JsonVisitor;
 
 /**
@@ -35,7 +36,7 @@ public class JsonParseApplication {
         throw new JsonParseRuntimeException(e);
       }
     }
-    Ast contextAst = new Ast2ContextAstConvertor(ast).convert();
+    ContextAst contextAst = new Ast2ContextAstConvertor(ast).convert();
     return new JsonVisitor<T>(contextAst, classOfT, encoding).parseObject();
   }
 
