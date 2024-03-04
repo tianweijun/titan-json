@@ -57,7 +57,7 @@ public class JsonClassReflector {
 
   private int getLengthOfArray(ValueAst valueAst) {
     int lengthOfArray = 0;
-    ContextAst productionRuleAst = (ContextAst) valueAst.children.getFirst();
+    ContextAst productionRuleAst = (ContextAst) valueAst.children.get(0);
     String grammarName = productionRuleAst.grammar.getName();
     if (grammarName.equals("arr")) {
       ArrAst arrAst = (ArrAst) productionRuleAst;

@@ -43,7 +43,7 @@ public class JsonVisitor<T> implements AstVisitor {
   public void visitJson(JsonAst jsonAst) {
     JsonClassReflector jsonClassReflector = new JsonClassReflector(classOfT);
 
-    ValueAst valueAst = (ValueAst) jsonAst.children.getFirst();
+    ValueAst valueAst = (ValueAst) jsonAst.children.get(0);
     // create root value 引用
     Object value = jsonClassReflector.newInstance(valueAst);
     jsonAst.initContextAstValue(jsonClassReflector, value);
@@ -54,7 +54,7 @@ public class JsonVisitor<T> implements AstVisitor {
 
   @Override
   public void visitValue(ValueAst valueAst) {
-    ContextAst productionRuleAst = (ContextAst) valueAst.children.getFirst();
+    ContextAst productionRuleAst = (ContextAst) valueAst.children.get(0);
     productionRuleAst.passValueByParent();
 
     String grammarName = productionRuleAst.grammar.getName();
@@ -165,7 +165,7 @@ public class JsonVisitor<T> implements AstVisitor {
       if (eleGrammar.getName().equals("pair")) {
         PairAst pair = (PairAst) objEleAst;
         // 传引用(field)
-        String fieldName = pair.children.getFirst().token.text;
+        String fieldName = pair.children.get(0).token.text;
         fieldName = formatFieldName(fieldName);
         FieldOfObjectContextAstValue fieldOfObjectContextAstValue =
             new FieldOfObjectContextAstValue(obj, fieldName);
@@ -185,7 +185,7 @@ public class JsonVisitor<T> implements AstVisitor {
         (FieldOfObjectContextAstValue) pairAst.contextAstValue;
     JsonClassReflector fieldJsonClassReflector = fieldOfObjectContextAstValue.classOfValue;
     // 创建引用
-    ValueAst pairValueAst = (ValueAst) pairAst.children.getLast();
+    ValueAst pairValueAst = (ValueAst) pairAst.children.get(2);
     Object pairValue = fieldJsonClassReflector.newInstance(pairValueAst);
     // 设置值引用
     if (!fieldJsonClassReflector.isPrimitiveWrapperType() && !fieldJsonClassReflector.isString()) {

@@ -2,6 +2,7 @@ package titan.json.visitor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import titan.ast.runtime.Ast;
 import titan.ast.runtime.Grammar;
 import titan.json.JsonParseRuntimeException;
@@ -25,11 +26,13 @@ public class Ast2ContextAstConvertor {
 
   private ContextAst doConvert(Ast ast) {
     ContextAst contextAst = createContextAstByAst(ast);
+    ArrayList<ContextAst> contextAstChildren = new ArrayList<>(ast.children.size());
     for (Ast astChild : ast.children) {
       ContextAst child = doConvert(astChild);
       child.parent = contextAst;
-      contextAst.children.add(child);
+      contextAstChildren.add(child);
     }
+    contextAst.children = contextAstChildren;
     return contextAst;
   }
 

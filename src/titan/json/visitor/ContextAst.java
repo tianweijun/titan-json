@@ -1,6 +1,6 @@
 package titan.json.visitor;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import titan.ast.runtime.AstToken;
 import titan.ast.runtime.Grammar;
 import titan.json.reflector.JsonClassReflector;
@@ -15,7 +15,7 @@ import titan.json.visitor.ContextAstValue.RefContextAstValue;
 public class ContextAst {
   public Grammar grammar = null;
   public AstToken token = null;
-  public LinkedList<ContextAst> children = new LinkedList<ContextAst>();
+  public ArrayList<ContextAst> children = new ArrayList<ContextAst>();
 
   ContextAst parent = null;
   ContextAstValue contextAstValue = null;
