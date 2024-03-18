@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import titan.ast.runtime.Ast;
-import titan.ast.runtime.Grammar;
+import titan.ast.runtime.AstGrammar;
 import titan.json.JsonParseRuntimeException;
 import titan.json.visitor.ContextAst.TerminalAst;
 
@@ -38,8 +38,8 @@ public class Ast2ContextAstConvertor {
 
   private ContextAst createContextAstByAst(Ast ast) {
     ContextAst contextAst = null;
-    Grammar grammar = ast.grammar;
-    switch (grammar.getType()) {
+    AstGrammar grammar = ast.grammar;
+    switch (grammar.type) {
       case TERMINAL_FRAGMENT:
         break;
       case TERMINAL:
@@ -50,7 +50,7 @@ public class Ast2ContextAstConvertor {
         try {
           String className = getContextAstClassName(ast);
           Class<?> contextClass = Class.forName(className);
-          Constructor<?> constructor = contextClass.getDeclaredConstructor(Grammar.class);
+          Constructor<?> constructor = contextClass.getDeclaredConstructor(AstGrammar.class);
           contextAst = (ContextAst) constructor.newInstance(grammar);
           contextAst.token = ast.token;
         } catch (ClassNotFoundException
@@ -73,7 +73,7 @@ public class Ast2ContextAstConvertor {
    * @return
    */
   private String getContextAstClassName(Ast ast) {
-    String className = ast.grammar.getName();
+    String className = ast.grammar.name;
     className = className.substring(0, 1).toUpperCase() + className.substring(1);
     className = "titan.json.visitor.ContextAst$" + className + "Ast";
     return className;

@@ -1,7 +1,7 @@
 package titan.json.visitor;
 
 import java.io.UnsupportedEncodingException;
-import titan.ast.runtime.Grammar;
+import titan.ast.runtime.AstGrammar;
 import titan.ast.runtime.StringUtils;
 import titan.json.JsonParseRuntimeException;
 import titan.json.reflector.JsonClassReflector;
@@ -57,7 +57,7 @@ public class JsonVisitor<T> implements AstVisitor {
     ContextAst productionRuleAst = (ContextAst) valueAst.children.get(0);
     productionRuleAst.passValueByParent();
 
-    String grammarName = productionRuleAst.grammar.getName();
+    String grammarName = productionRuleAst.grammar.name;
     switch (grammarName) {
       case "Null":
         productionRuleAst.setValue(null);
@@ -122,8 +122,8 @@ public class JsonVisitor<T> implements AstVisitor {
     int indexOfArray = 0;
     ArrayContextAstValue arrayContextAstValue = (ArrayContextAstValue) arrAst.contextAstValue;
     for (ContextAst eleArrAst : arrAst.children) {
-      Grammar eleArrGrammar = eleArrAst.grammar;
-      if (eleArrGrammar.getName().equals("value")) {
+      AstGrammar eleArrGrammar = eleArrAst.grammar;
+      if (eleArrGrammar.name.equals("value")) {
         ValueAst valueEleArrAst = (ValueAst) eleArrAst;
         // 新建引用
         Object vOfEleArr = eleArrClassReflector.newInstance(valueEleArrAst);
@@ -161,8 +161,8 @@ public class JsonVisitor<T> implements AstVisitor {
     JsonClassReflector objClassReflector = objAst.contextAstValue.classOfValue;
     Object obj = objAst.contextAstValue.getValue();
     for (ContextAst objEleAst : objAst.children) {
-      Grammar eleGrammar = objEleAst.grammar;
-      if (eleGrammar.getName().equals("pair")) {
+      AstGrammar eleGrammar = objEleAst.grammar;
+      if (eleGrammar.name.equals("pair")) {
         PairAst pair = (PairAst) objEleAst;
         // 传引用(field)
         String fieldName = pair.children.get(0).token.text;
