@@ -46,8 +46,7 @@ public class JsonParseApplication {
           JsonParseApplication.class
               .getClassLoader()
               .getResourceAsStream("resources/automata.data");
-      runtimeAstApplication = new RuntimeAutomataAstApplication();
-      runtimeAstApplication.setContext(jsonAutomataInputStream);
+      runtimeAstApplication = new RuntimeAutomataAstApplication(jsonAutomataInputStream);
       if (null != jsonAutomataInputStream) {
         try {
           jsonAutomataInputStream.close();
